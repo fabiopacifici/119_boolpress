@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])
         // Put here all routes that needs to be protected by our authenticatio system
         // All routes need to share a common name and prefix and the middleware
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); //admin
+        Route::resource('posts', PostController::class);
     });
 
 
