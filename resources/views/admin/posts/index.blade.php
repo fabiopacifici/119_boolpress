@@ -3,8 +3,10 @@
 @section('content')
 
 <header class="py-3 bg-dark text-white">
-    <div class="container">
+    <div class="container d-flex align-items-center justify-content-between">
         <h1>Posts</h1>
+
+        <a class="btn btn-primary" href="{{route('admin.posts.create')}}"><i class="fas fa-pencil fa-xs fa-fw"></i> New Post</a>
     </div>
 
 </header>
@@ -36,7 +38,12 @@
                         <td>{{$post->title}}</td>
                         <td>{{$post->slug}}</td>
                         <td>
-                            view/edit/delete
+
+                            <a class="btn btn-dark" href="{{route('admin.posts.show', $post)}}">
+                                <i class="fas fa-eye fa-xs fa-fw"></i>
+                                <span style="font-size: 0.7rem" class="text-uppercase">View</span>
+                            </a>
+                            /edit/delete
                         </td>
 
                     </tr>

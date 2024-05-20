@@ -28,7 +28,9 @@ Route::middleware(['auth', 'verified'])
         // Put here all routes that needs to be protected by our authenticatio system
         // All routes need to share a common name and prefix and the middleware
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); //admin
-        Route::resource('posts', PostController::class);
+        Route::resource('posts', PostController::class)->parameters([
+            'posts' => 'post:slug'
+        ]);
     });
 
 
