@@ -43,5 +43,38 @@ Update the vite config file
 
 ```bash
 mv vite.config.js vite.config.cjs
+
+php artisan serve
 npm run dev
 ```
+
+⚡ Ricorda di committare e pushare regolarmente!
+
+## Refactoring Admin dashboard
+
+create a controller to handle the dashboard requests
+
+```bash
+php artisan make:controller Admin/DashboardController
+
+```
+
+update the route and use the above controller
+
+```php
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+```
+
+retun the view in the index method in the dashboard controller
+
+```php
+class DashboardController extends Controller
+{
+    function index()
+    {
+        return view('dashboard');
+    }
+}
+
+```
+
