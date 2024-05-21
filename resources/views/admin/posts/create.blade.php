@@ -41,7 +41,7 @@
 
         <div class="mb-3">
             <label for="cover_image" class="form-label">cover_image</label>
-            <input type="text" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" id="cover_image" aria-describedby="cover_imageHelper" placeholder="Learn php" />
+            <input type="text" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" id="cover_image" aria-describedby="cover_imageHelper" placeholder="Learn php" value="{{old('cover_image')}}" />
             <small id="cover_imageHelper" class="form-text text-muted">Type a cover_image for this post</small>
             @error('cover_image')
             <div class="text-danger py-2">
