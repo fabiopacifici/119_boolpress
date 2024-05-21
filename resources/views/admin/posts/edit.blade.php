@@ -14,6 +14,7 @@
 <div class="container py-5">
 
     @include('partials.validation-messages')
+    @include('partials.session-messages')
 
     <form action="{{route('admin.posts.update', $post)}}" method="post">
         @csrf

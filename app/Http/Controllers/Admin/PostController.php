@@ -81,7 +81,7 @@ class PostController extends Controller
         $post->update($validated);
 
         //redirect
-        return to_route('admin.posts.index')->with('message', "Post $post->title update successfully");
+        return to_route('admin.posts.edit', $post)->with('message', "Post $post->title update successfully");
     }
 
     /**
