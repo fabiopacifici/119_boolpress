@@ -23,8 +23,8 @@ class StorePostRequest extends FormRequest
     {
         return [
             'title' => 'required|min:5|max:150',
-            'content' => 'required',
-            'cover_image' => 'required'
+            'content' => 'nullable',
+            'cover_image' => 'nullable'
         ];
     }
 }

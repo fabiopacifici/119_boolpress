@@ -45,7 +45,7 @@ class PostController extends Controller
         // dd($validated);
         Post::create($validated);
         // redirect
-        return to_route('admin.posts.index');
+        return to_route('admin.posts.index')->with('message', 'Post created successfully');
     }
 
     /**
@@ -61,7 +61,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -69,7 +69,19 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        //dd($request->all());
+
+        // validate
+        $validated = $request->validated();
+        $slug = Str::slug($request->title, '-');
+        $validated['slug'] = $slug;
+
+        //dd($validated);
+        // update
+        $post->update($validated);
+
+        //redirect
+        return to_route('admin.posts.index')->with('message', "Post $post->title update successfully");
     }
 
     /**
@@ -77,6 +89,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return to_route('admin.posts.index')->with('message', "Post $post->title deleted successfully");
     }
 }
