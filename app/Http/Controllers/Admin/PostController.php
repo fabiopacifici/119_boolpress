@@ -6,6 +6,7 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -42,7 +43,16 @@ class PostController extends Controller
 
         $validated['slug'] = $slug;
         // create
-        // dd($validated);
+
+        if ($request->has('cover_image')) {
+            $image_path = Storage::put('uploads', $validated['cover_image']);
+            //dd($validated, $image_path);
+            $validated['cover_image'] = $image_path;
+        }
+
+        //dd($validated);
+
+
         Post::create($validated);
         // redirect
         return to_route('admin.posts.index')->with('message', 'Post created successfully');
@@ -77,6 +87,21 @@ class PostController extends Controller
         $validated['slug'] = $slug;
 
         //dd($validated);
+
+        if ($request->has('cover_image')) {
+
+
+            if ($post->cover_image) {
+                // delete the old image
+                Storage::delete($post->cover_image);
+            }
+
+            $image_path = Storage::put('uploads', $validated['cover_image']);
+            //dd($validated, $image_path);
+            $validated['cover_image'] = $image_path;
+        }
+
+
         // update
         $post->update($validated);
 
@@ -89,6 +114,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if ($post->cover_image) {
+            // delete the old image
+            Storage::delete($post->cover_image);
+        }
         $post->delete();
         return to_route('admin.posts.index')->with('message', "Post $post->title deleted successfully");
     }

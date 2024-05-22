@@ -12,11 +12,26 @@
 <section class="py-5">
     <div class="container">
 
+        <div class="row">
+            <div class="col">
 
-        <img src="{{$post->cover_image}}" alt="{{$post->title}}">
+                @if(Str::startsWith($post->cover_image, 'https://'))
+                <img class="img-fluid" loading="lazy" src="{{$post->cover_image}}" alt="{{$post->title}}">
+                @else
+                <img class="img-fluid" loading="lazy" src="{{asset('storage/' . $post->cover_image)}}" alt="{{$post->title}}">
+
+                @endif
+            </div>
+
+            <div class="col">
+                <h5 class="text-muted">{{$post->slug}}</h5>
+                <h3 class="text-muted">{{$post->title}}</h3>
+                <p>{{$post->content}}</p>
+            </div>
+        </div>
 
 
-        <p>{{$post->content}}</p>
+
 
 
     </div>

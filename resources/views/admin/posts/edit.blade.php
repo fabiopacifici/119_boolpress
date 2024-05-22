@@ -16,7 +16,7 @@
     @include('partials.validation-messages')
     @include('partials.session-messages')
 
-    <form action="{{route('admin.posts.update', $post)}}" method="post">
+    <form action="{{route('admin.posts.update', $post)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -32,10 +32,14 @@
 
 
         <div class="d-flex gap-2 mb-3">
-            <img width="200" src="{{$post->cover_image}}" alt="Image description for {{$post->title}}">
+            @if(Str::startsWith($post->cover_image, 'https://'))
+            <img width="140" src="{{$post->cover_image}}" alt="{{$post->title}}">
+            @else
+            <img width="140" src="{{asset('storage/' . $post->cover_image)}}" alt="{{$post->title}}">
+            @endif
             <div>
                 <label for="cover_image" class="form-label">Update cover image</label>
-                <input type="text" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" id="cover_image" aria-describedby="cover_imageHelper" placeholder="Learn php" value="{{old('cover_image', $post->cover_image)}}" />
+                <input type="file" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" id="cover_image" aria-describedby="cover_imageHelper" placeholder="Learn php" value="{{old('cover_image', $post->cover_image)}}" />
                 <small id="cover_imageHelper" class="form-text text-muted">Type a cover_image for this post</small>
                 @error('cover_image')
                 <div class="text-danger py-2">

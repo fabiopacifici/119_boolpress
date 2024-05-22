@@ -199,6 +199,12 @@ Update the dropdown link in the header navigation menu for the admin layout (aro
 
 ```
 
+---
+
+-> Turn the repo here in a github template repository
+
+---
+
 ## CRUD for posts
 
 Now you can start working to your crud operations for the given resource
