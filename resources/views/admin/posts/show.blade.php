@@ -26,6 +26,9 @@
             <div class="col">
                 <h5 class="text-muted">{{$post->slug}}</h5>
                 <h3 class="text-muted">{{$post->title}}</h3>
+                <div class="metadata">
+                    <strong>Category</strong> {{$post->category ? $post->category->name : 'Uncategorized' }}
+                </div>
                 <p>{{$post->content}}</p>
             </div>
         </div>
