@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\PostSeeder;
+use Database\Seeders\CategorySeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,7 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            PostSeeder::class
+            PostSeeder::class,
+            CategorySeeder::class
         ]);
     }
 }
