@@ -23,6 +23,7 @@ class UpdatePostRequest extends FormRequest
     {
         return [
             'title' => 'required|min:5|max:150',
+            'category_id' => 'nullable|exists:categories,id',
             'content' => 'nullable',
             'cover_image' => 'nullable'
         ];
