@@ -42,6 +42,21 @@
         </div>
 
 
+
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Category</label>
+            <select class="form-select" name="category_id" id="category_id">
+                <option selected disabled>Select a category</option>
+                @foreach ($categories as $category )
+                <option value="{{$category->id}}" {{$category->id == old('category_id') ? 'selected' : ''  }}>{{$category->name}}</option>
+                @endforeach
+
+            </select>
+        </div>
+
+
+
+
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
             <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content" rows="5">{{old('content')}}</textarea>
