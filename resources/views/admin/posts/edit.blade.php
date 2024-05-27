@@ -50,6 +50,63 @@
         </div>
 
 
+        <div class="mb-3">
+            <label for="category_id" class="form-label">Category</label>
+            <select class="form-select" name="category_id" id="category_id">
+                <option selected disabled>Select a category</option>
+                @foreach ($categories as $category )
+                <option value="{{$category->id}}" {{$category->id == old('category_id', $post->category_id) ? 'selected' : ''  }}>{{$category->name}}</option>
+                @endforeach
+
+            </select>
+        </div>
+
+
+        <div class="mb-3 d-flex gap-3 flex-wrap">
+
+
+
+            @foreach ($tags as $tag)
+
+            <!-- if there are errors -->
+            @if($errors->any())
+
+            <h4>There are validation errros</h4>
+
+            <div class="form-check">
+
+
+                <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} />
+                <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label>
+
+            </div>
+            @else
+            <h4>No validation errros</h4>
+            <div class="form-check">
+
+                <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} />
+                <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label>
+
+            </div>
+
+            @endif
+
+            <!-- otherwise -->
+
+
+            @endforeach
+
+
+
+
+        </div>
+        @error('tags')
+        <div class="text-danger py-2">
+            {{$message}}
+        </div>
+        @enderror
+
+
 
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
@@ -62,16 +119,7 @@
         </div>
 
 
-        <div class="mb-3">
-            <label for="category_id" class="form-label">Category</label>
-            <select class="form-select" name="category_id" id="category_id">
-                <option selected disabled>Select a category</option>
-                @foreach ($categories as $category )
-                <option value="{{$category->id}}" {{$category->id == old('category_id', $post->category_id) ? 'selected' : ''  }}>{{$category->name}}</option>
-                @endforeach
 
-            </select>
-        </div>
 
 
         <button type="submit" class="btn btn-primary">

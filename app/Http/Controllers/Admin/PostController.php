@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -58,7 +60,10 @@ class PostController extends Controller
 
         //dd($validated);
 
-        Post::create($validated);
+        $post = Post::create($validated);
+        if ($request->has('tags')) {
+            $post->tags()->attach($validated['tags']);
+        }
         // redirect
         return to_route('admin.posts.index')->with('message', 'Post created successfully');
     }
@@ -79,7 +84,8 @@ class PostController extends Controller
         //dd($request->all());
         if (Auth::id() === $post->user_id || auth()->user()->is_super_admin()) {
             $categories = Category::all();
-            return view('admin.posts.edit', compact('post', 'categories'));
+            $tags = Tag::all();
+            return view('admin.posts.edit', compact('post', 'categories', 'tags'));
         }
         abort(403, "Don't try to mess up with other users posts");
     }
@@ -90,6 +96,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
 
+        dd($request->all());
         // validate
         $validated = $request->validated();
         $slug = Str::slug($request->title, '-');

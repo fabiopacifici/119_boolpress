@@ -54,6 +54,42 @@
             </select>
         </div>
 
+        <div class="mb-3 d-flex gap-3 flex-wrap">
+
+
+
+            @foreach ($tags as $tag)
+            <div class="form-check">
+
+                <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} />
+                <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label>
+
+            </div>
+
+            @endforeach
+
+
+
+        </div>
+        @error('tags')
+        <div class="text-danger py-2">
+            {{$message}}
+        </div>
+        @enderror
+
+
+
+        <!--
+        <div class="mb-3">
+            <label for="tags" class="form-label">Tags</label>
+            <select multiple class="form-select form-select-lg" name="tags[]" id="tags">
+                <option selected disabled>Select one</option>
+                @foreach ($tags as $tag )
+                <option value="{{$tag->id}}">{{$tag->name}}</option>
+                @endforeach
+            </select>
+        </div> -->
+
 
 
 
