@@ -28,6 +28,8 @@
                 <h3 class="text-muted">{{$post->title}}</h3>
                 <div class="metadata">
                     <strong>Category</strong> {{$post->category ? $post->category->name : 'Uncategorized' }}
+
+                    <strong>Author</strong> {{$post->user ? $post->user->name : 'N/A'}}
                 </div>
                 <p>{{$post->content}}</p>
             </div>

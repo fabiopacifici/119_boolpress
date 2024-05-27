@@ -54,4 +54,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+
+
+    function is_super_admin()
+    {
+        return Auth::id() === 1;
+    }
 }

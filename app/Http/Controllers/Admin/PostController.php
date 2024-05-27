@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -18,7 +19,7 @@ class PostController extends Controller
     public function index()
     {
         //dd(Post::all());
-        return view('admin.posts.index', ['posts' => Post::orderByDesc('id')->paginate(8)]);
+        return view('admin.posts.index', ['posts' => Post::where('user_id', Auth::id())->orderByDesc('id')->paginate(8)]);
     }
 
     /**
@@ -36,7 +37,7 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         //dd($request->all());
-
+        //dd(Auth::user());
         // validate
         $validated = $request->validated();
 
@@ -53,7 +54,9 @@ class PostController extends Controller
         }
 
         //dd($validated);
+        $validated['user_id'] = Auth::id();
 
+        //dd($validated);
 
         Post::create($validated);
         // redirect
@@ -73,8 +76,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        //dd($request->all());
+        if (Auth::id() === $post->user_id || auth()->user()->is_super_admin()) {
+            $categories = Category::all();
+            return view('admin.posts.edit', compact('post', 'categories'));
+        }
+        abort(403, "Don't try to mess up with other users posts");
     }
 
     /**
@@ -82,7 +89,6 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //dd($request->all());
 
         // validate
         $validated = $request->validated();
