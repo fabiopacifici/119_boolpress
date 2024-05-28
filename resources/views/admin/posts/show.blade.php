@@ -28,7 +28,15 @@
                 <h3 class="text-muted">{{$post->title}}</h3>
                 <div class="metadata">
                     <strong>Category</strong> {{$post->category ? $post->category->name : 'Uncategorized' }}
+                    <br>
+                    <strong>Tags</strong>
+                    @forelse ($post->tags as $tag )
 
+                    <span class="badge bg-dark">{{$tag->name}}</span>
+
+                    @empty
+                    <span class="badge bg-dark"> n/a </span>
+                    @endforelse
                     <strong>Author</strong> {{$post->user ? $post->user->name : 'N/A'}}
                 </div>
                 <p>{{$post->content}}</p>

@@ -71,22 +71,26 @@
             <!-- if there are errors -->
             @if($errors->any())
 
-            <h4>There are validation errros</h4>
-
             <div class="form-check">
-
-
                 <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} />
                 <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label>
 
             </div>
             @else
-            <h4>No validation errros</h4>
             <div class="form-check">
 
-                <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }} />
+                <!-- <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ in_array($tag->id, $post->tags->pluck('id')->toArray()) ? 'checked' : ''}} />
+                <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label> -->
+
+                <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ $post->tags->contains($tag) ? 'checked' : ''}} />
                 <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label>
 
+
+                <!--    <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ $post->tags->find($tag->id) ? 'checked' : ''}} />
+                <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label> -->
+
+                <!--  <input name="tags[]" class="form-check-input " type="checkbox" value="{{$tag->id}}" id="tag-{{$tag->id}}" {{ in_array($tag->id, $selectedTags) ? 'checked' : ''}} />
+                <label class="form-check-label" for="tag-{{$tag->id}}">{{$tag->name}} </label> -->
             </div>
 
             @endif

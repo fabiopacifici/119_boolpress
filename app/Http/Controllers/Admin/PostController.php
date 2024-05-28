@@ -85,7 +85,8 @@ class PostController extends Controller
         if (Auth::id() === $post->user_id || auth()->user()->is_super_admin()) {
             $categories = Category::all();
             $tags = Tag::all();
-            return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+            $selectedTags = $post->tags->pluck('id')->toArray();
+            return view('admin.posts.edit', compact('post', 'categories', 'tags', 'selectedTags'));
         }
         abort(403, "Don't try to mess up with other users posts");
     }
@@ -96,7 +97,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
 
-        dd($request->all());
+        //dd($request->all());
         // validate
         $validated = $request->validated();
         $slug = Str::slug($request->title, '-');
@@ -121,6 +122,15 @@ class PostController extends Controller
         // update
         $post->update($validated);
 
+
+        if ($request->has('tags')) {
+            $post->tags()->sync($validated['tags']);
+        } else {
+            $post->tags()->sync([]);
+        }
+
+
+
         //redirect
         return to_route('admin.posts.edit', $post)->with('message', "Post $post->title update successfully");
     }
@@ -130,6 +140,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        //$post->tags()->detach();
+
         if ($post->cover_image) {
             // delete the old image
             Storage::delete($post->cover_image);
