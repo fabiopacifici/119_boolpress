@@ -26,4 +26,25 @@ class PostController extends Controller
             'posts' => $posts,
         ]);
     }
+
+    public function show($id)
+    {
+        $post = Post::with('user', 'category', 'tags')->where('id', $id)->first();
+
+        if ($post) {
+            // return the object
+            return response()->json([
+                'success' => true,
+                'response' => $post,
+            ]);
+
+        } else {
+            // return an error response for a future 404
+            return response()->json([
+                'success' => false,
+                'response' => '404 Sorry nothing found!',
+            ]);
+        }
+
+    }
 }

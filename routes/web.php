@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Lead;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +19,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return to_route('login');
 });
+
+
+
+Route::get('/mailable', function () {
+    /* $lead = [
+        'name' => 'Fabio',
+        'email' => 'fabio@example.com',
+        'message' => 'lorem ipsum dolor hi'
+    ]; */
+
+    $lead = Lead::find(1);
+
+    return new App\Mail\NewLeadMessageMd($lead);
+});
+
 
 
 Route::middleware(['auth', 'verified'])
